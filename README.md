@@ -5,7 +5,7 @@ This demo wants to synchronize the application with the contacts on the phone th
   
   so that the customized icon is displayed on the contact, you can click to jump to the application.
 
-In order to achieve this requirement, I refer to the official document and this article[https://medium.com/@stephen.cty/android-account-sync-adapter-and-contacts-contract-database-983281be4847]
+In order to achieve this requirement, I refer to the official document and this article[Link](https://medium.com/@stephen.cty/android-account-sync-adapter-and-contacts-contract-database-983281be4847)
 
 This Demo shows the most basic operations for this requirement.
  
@@ -32,7 +32,7 @@ It is possible to write data to the contact database through code in your own ap
  
  通过把自定义的类型的数据写入到联系人数据库并绑定已存在的联系人,让联系人上显示自定义的图标,可以点击跳转到应用.
  
- 为了实现这个需求我参考了官方文档及这篇文章[https://medium.com/@stephen.cty/android-account-sync-adapter-and-contacts-contract-database-983281be4847]
+ 为了实现这个需求我参考了官方文档及这篇文章[链 接](https://medium.com/@stephen.cty/android-account-sync-adapter-and-contacts-contract-database-983281be4847)
  
  这个Demo展示了这个需求最基本的操作.
  
@@ -48,3 +48,6 @@ It is possible to write data to the contact database through code in your own ap
 而自己应用中通过代码写入数据到联系人数据库是可以的,但联系人上不会显示对应的图标,也无法做到点击.
  
  
+ ![There should be two lines, showing your own icon like WeChat](/images/1.jpg)
+ 
+ ![Here you can see that the data is successfully inserted, TNGD is the applied label](/images/2.jpg)

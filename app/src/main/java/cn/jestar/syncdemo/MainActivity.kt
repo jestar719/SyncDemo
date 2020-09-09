@@ -88,8 +88,10 @@ class MainActivity : AppCompatActivity() {
         val visible = if (nullAccount) View.VISIBLE else View.GONE
         if (!nullAccount) {
             tvTitle.text = account!!.name
-            val accountData = SyncManager.getAccountData(account.name)
-            setAdapter(accountData)
+            if (checkPermission()) {
+                val accountData = SyncManager.getAccountData(account.name)
+                setAdapter(accountData)
+            }
         }
         etInput.visibility = visible
         btnAddAccount.visibility = visible
