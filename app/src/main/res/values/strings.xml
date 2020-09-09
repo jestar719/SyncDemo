@@ -9,4 +9,5 @@
     <string name="account_type">cn.jestar.syncdemo</string>
     <string name="account_link">vnd.android.cursor.item/vnd.cn.jestar.syncdemo.link</string>
     <string name="account_label">TNGD</string>
+    <string name="delete_contact_data">Delete Contact Data</string>
 </resources>

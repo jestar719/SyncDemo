@@ -67,7 +67,7 @@ class ContactOperations(
                 mIsNewContact = true
             }
             val contentValues = ContentValues()
-            contentValues.put(ContactsContract.RawContacts.ACCOUNT_TYPE, ACCOUNT_TYPE)
+            contentValues.put(ContactsContract.RawContacts.ACCOUNT_TYPE, cn.jestar.syncdemo.contact.ACCOUNT_TYPE)
             contentValues.put(ContactsContract.RawContacts.ACCOUNT_NAME, accountName)
             val builder: ContentProviderOperation.Builder = cop.newInsertCpo(ContactsContract.RawContacts.CONTENT_URI, isSyncOperation, true)
                                 .withValues(contentValues)

@@ -19,7 +19,8 @@ object SyncManager {
             val batchOperation = BatchOperation(context.contentResolver)
             val bean = list[0]
             ContactOperations.createNewContact(account.name, true, batchOperation, bean.name, bean.phone)
-            batchOperation.execute()
+            val execute = batchOperation.execute()
+            Log.i("jestar",execute.toString())
             return utils.queryByCurrentAccount(account.name)
         }
         return ArrayList()
@@ -52,5 +53,14 @@ object SyncManager {
 
     fun forceSync(account: Account,activity: Activity){
         ContentResolver.requestSync(account,ContactsContract.AUTHORITY, Bundle.EMPTY)
+    }
+
+    fun deleteData(name:String): ArrayList<ContactBean> {
+         utils.deleteContactByAccount(name)
+        return utils.queryByCurrentAccount(name)
+    }
+
+    fun getAccountData(name: String): ArrayList<ContactBean> {
+        return utils.queryByCurrentAccount(name)
     }
 }
