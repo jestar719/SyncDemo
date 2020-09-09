@@ -47,7 +47,11 @@ It is possible to write data to the contact database through code in your own ap
  
 而自己应用中通过代码写入数据到联系人数据库是可以的,但联系人上不会显示对应的图标,也无法做到点击.
  
+ ### There should be two lines, showing your own icon like WeChat
+ ### 正常来说这里应该是有两行,其中一行显示我的图标,就像微信那样
+ ![](/images/1.jpg)
  
- ![There should be two lines, showing your own icon like WeChat](/images/1.jpg)
  
- ![Here you can see that the data is successfully inserted, TNGD is the applied label](/images/2.jpg)
+ ### Here you can see that the data is successfully inserted, TNGD is the applied label
+ ### 这张图可以看到手动插入的数据是成功的,TNGD是自定义的标签
+ ![](/images/2.jpg)
