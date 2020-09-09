@@ -22,8 +22,8 @@
 >
 
     <ContactsDataKind
-        android:mimeType="vnd.android.cursor.item/vnd.cn.jestar.syncdemo.link"
-        android:icon="@drawable/ic_launcher_background"
+        android:mimeType="@string/account_link"
+        android:icon="@mipmap/ic_launcher_round"
         android:summaryColumn="data2"
         android:detailColumn="data3"
         android:detailSocialSummary="true" />

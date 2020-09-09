@@ -1,4 +1,4 @@
-package cn.jestar.syncdemo.sync.contact
+package cn.jestar.syncdemo.contact
 
 import android.content.ContentProviderOperation
 import android.content.ContentProviderResult
@@ -148,7 +148,7 @@ class ContactOperations(
     private fun addProfileAction(name: String, phone: String): ContactOperations {
         mValues.apply {
             clear()
-            put(CustomColumns.DATA_SUMMARY, cn.jestar.syncdemo.sync.contact.ACCOUNT_TYPE)
+            put(CustomColumns.DATA_SUMMARY, cn.jestar.syncdemo.contact.ACCOUNT_TYPE)
             put(CustomColumns.DATA_DETAIL, "Transfer To $name")
             put(ContactsContract.Data.MIMETYPE, ACCOUT_MIME_TYPE)
         }

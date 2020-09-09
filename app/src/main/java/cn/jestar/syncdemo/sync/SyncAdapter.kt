@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.SyncResult
 import android.os.Bundle
 import android.util.Log
-import cn.jestar.syncdemo.sync.contact.SyncManager
+import cn.jestar.syncdemo.contact.SyncManager
 
 class SyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, false, true) {
     override fun onPerformSync(p0: Account, p1: Bundle, p2: String, p3: ContentProviderClient, p4: SyncResult) {

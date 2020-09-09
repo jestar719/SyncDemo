@@ -1,9 +1,9 @@
-package cn.jestar.syncdemo.sync.contact
+package cn.jestar.syncdemo.contact
 
 import android.provider.ContactsContract
 
-val ACCOUT_NAME="cn.jestar.sync"
-val ACCOUNT_TYPE="Jestar"
+val ACCOUT_NAME="Jestar"
+val ACCOUNT_TYPE="cn.jestar.syncdemo"
 val ACCOUT_MIME_TYPE= "vnd.android.cursor.item/vnd.cn.jestar.sync.link"
 
 

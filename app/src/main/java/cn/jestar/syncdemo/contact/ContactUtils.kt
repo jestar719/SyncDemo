@@ -1,4 +1,4 @@
-package cn.jestar.syncdemo.sync.contact
+package cn.jestar.syncdemo.contact
 
 import android.content.ContentResolver
 import android.database.Cursor
