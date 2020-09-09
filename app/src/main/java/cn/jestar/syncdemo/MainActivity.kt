@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_delete_contact_data).setOnClickListener { onDeleteData() }
         adapter =
             ArrayAdapter<ContactBean>(this, android.R.layout.simple_list_item_1)
-        findViewById<ListView>(R.id.lv_data).adapter=adapter
+        findViewById<ListView>(R.id.lv_data).adapter = adapter
     }
 
     private fun onDeleteData() {
-        if (account != null){
+        if (account != null) {
             val deleteData = SyncManager.deleteData(account!!.name)
             setAdapter(deleteData)
         }
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun manualWriteContact() {
-        if (account != null){
+        if (account != null) {
             val sync = SyncManager.sync(account!!)
             setAdapter(sync)
         }
@@ -79,14 +79,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun onSync() {
         if (account != null) {
-            SyncManager.forceSync(account!!, this)
+            SyncManager.forceSync(account!!)
         }
     }
 
     private fun showInput(account: Account?) {
         val nullAccount = account == null
         val visible = if (nullAccount) View.VISIBLE else View.GONE
-        if (!nullAccount){
+        if (!nullAccount) {
             tvTitle.text = account!!.name
             val accountData = SyncManager.getAccountData(account.name)
             setAdapter(accountData)

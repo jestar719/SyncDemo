@@ -71,7 +71,7 @@ class ContactUtils(private val provider: ContentResolver) {
             )
         )
         list.addAll(list1)
-        Log.i("jestar",list.toString())
+        Log.i("jestar", list.toString())
         return list
     }
 
@@ -83,9 +83,10 @@ class ContactUtils(private val provider: ContentResolver) {
                     it.id = cursor.getString(0)
                     it.contactId = cursor.getString(1)
                     it.rawContactId = cursor.getString(2)
-                    try{
-                    it.phone = cursor.getString(3)
-                    }catch (e:Exception){ }
+                    try {
+                        it.phone = cursor.getString(3)
+                    } catch (e: Exception) {
+                    }
                     it.name = cursor.getString(4)
                     it.accountType = cursor.getString(5)
                     it.accountName = cursor.getString(6)
@@ -135,16 +136,16 @@ class ContactUtils(private val provider: ContentResolver) {
     fun deleteContactByAccount(name: String) {
 //        val selection="${ContactsContract.RawContacts.ACCOUNT_TYPE}=?"
 //        val arg= arrayOf(ACCOUNT_TYPE)
-        val args= arrayOf(ACCOUNT_TYPE, name)
+        val args = arrayOf(ACCOUNT_TYPE, name)
         var delete = provider.delete(
             ContactsContract.Data.CONTENT_URI,
             accountTypeAndNameSelection,
             args
         )
-        Log.i("jestar","delete=$delete")
+        Log.i("jestar", "delete=$delete")
         val build = ContactsContract.RawContacts.CONTENT_URI.buildUpon()
             .appendQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, "true").build()
-        delete=provider.delete(build, accountTypeAndNameSelection, args)
-        Log.i("jestar","delete=$delete")
+        delete = provider.delete(build, accountTypeAndNameSelection, args)
+        Log.i("jestar", "delete=$delete")
     }
 }

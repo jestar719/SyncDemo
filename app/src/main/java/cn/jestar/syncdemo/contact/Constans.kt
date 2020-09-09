@@ -2,13 +2,13 @@ package cn.jestar.syncdemo.contact
 
 import android.provider.ContactsContract
 
-val ACCOUT_NAME="Jestar"
-val ACCOUNT_TYPE="cn.jestar.syncdemo"
-val ACCOUT_MIME_TYPE= "vnd.android.cursor.item/vnd.cn.jestar.sync.link"
+val ACCOUT_TAG = "Jestar"
+val ACCOUNT_TYPE = "cn.jestar.syncdemo"
+val ACCOUT_MIME_TYPE = "vnd.android.cursor.item/vnd.cn.jestar.sync.link"
 
 
-class CustomColumns{
-    companion object{
+class CustomColumns {
+    companion object {
         /**
          * MIME-type used when storing a profile [Data] entry.
          */
