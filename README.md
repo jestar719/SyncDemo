@@ -49,9 +49,9 @@ It is possible to write data to the contact database through code in your own ap
  
  ### There should be two lines, showing your own icon like WeChat
  ### 正常来说这里应该是有两行,其中一行显示我的图标,就像微信那样
- ![](/images/1.jpg)
+ ![](./images/1.jpg)
  
  
  ### Here you can see that the data is successfully inserted, TNGD is the applied label
  ### 这张图可以看到手动插入的数据是成功的,TNGD是自定义的标签
- ![](/images/2.jpg)
+ ![](./images/2.jpg)
