@@ -47,9 +47,15 @@
 
         <activity android:name=".LinkActivity">
             <intent-filter android:icon="@mipmap/ic_launcher_round">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.android.intent.action.VIEW" />
+                <category android:name="com.android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.item/vnd.cn.jestar.syncdemo.link"/>
+            </intent-filter>
+            <intent-filter>
+                <action
+                    android:name="com.android.contacts.action.INVITE_CONTACT" />
+                <data
+                    android:mimeType="vnd.android.cursor.item/contact" />
             </intent-filter>
         </activity>
 

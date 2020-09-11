@@ -24,8 +24,8 @@ class BatchOperation(private var mResolver: ContentResolver) {
         // Apply the mOperations to the content provider
         try {
             val results: Array<ContentProviderResult> = mResolver.applyBatch(
-                ContactsContract.AUTHORITY,
-                mOperations
+                    ContactsContract.AUTHORITY,
+                    mOperations
             )
             if (results.isNotEmpty()) {
                 for (i in results.indices) {
@@ -39,14 +39,20 @@ class BatchOperation(private var mResolver: ContentResolver) {
         return resultUris
     }
 
+    fun getList(): ArrayList<ContentProviderOperation> {
+        return mOperations
+    }
+
     fun size(): Int {
         return mOperations.size
     }
 }
 
+
+
 class ContactOperations(
-    private val isSyncOperation: Boolean,
-    val mBatchOperation: BatchOperation
+        private val isSyncOperation: Boolean,
+        val mBatchOperation: BatchOperation
 ) {
     private val mValues: ContentValues = ContentValues()
     private var mIsYieldAllowed = true
@@ -55,11 +61,11 @@ class ContactOperations(
 
     companion object {
         fun createNewContact(
-            accountName: String,
-            isSyncOperation: Boolean,
-            batchOperation: BatchOperation,
-            name: String,
-            phone: String
+                accountName: String,
+                isSyncOperation: Boolean,
+                batchOperation: BatchOperation,
+                name: String,
+                phone: String
         ) {
             val cop = ContactOperations(isSyncOperation, batchOperation).apply {
                 mBackReference = mBatchOperation.size()
@@ -67,30 +73,30 @@ class ContactOperations(
             }
             val contentValues = ContentValues()
             contentValues.put(
-                ContactsContract.RawContacts.ACCOUNT_TYPE,
-                cn.jestar.syncdemo.contact.ACCOUNT_TYPE
+                    ContactsContract.RawContacts.ACCOUNT_TYPE,
+                    cn.jestar.syncdemo.contact.ACCOUNT_TYPE
             )
             contentValues.put(ContactsContract.RawContacts.ACCOUNT_NAME, accountName)
             val builder: ContentProviderOperation.Builder =
-                cop.newInsertCpo(ContactsContract.RawContacts.CONTENT_URI, isSyncOperation, true)
-                    .withValues(contentValues)
+                    cop.newInsertCpo(ContactsContract.RawContacts.CONTENT_URI, isSyncOperation, true)
+                            .withValues(contentValues)
             batchOperation.add(builder.build())
-            cop.addName(name).addProfileAction(name, phone)
+            cop.addName(name).addPhone(phone).addProfileAction(name, phone)
         }
     }
 
     private fun newInsertCpo(
-        uri: Uri,
-        isSyncOperation: Boolean, isYieldAllowed: Boolean
+            uri: Uri,
+            isSyncOperation: Boolean, isYieldAllowed: Boolean
     ): ContentProviderOperation.Builder {
         return ContentProviderOperation
-            .newInsert(addCallerIsSyncAdapterParameter(uri, isSyncOperation))
-            .withYieldAllowed(isYieldAllowed)
+                .newInsert(addCallerIsSyncAdapterParameter(uri, isSyncOperation))
+                .withYieldAllowed(isYieldAllowed)
     }
 
     private fun addCallerIsSyncAdapterParameter(
-        uri: Uri,
-        isSyncOperation: Boolean
+            uri: Uri,
+            isSyncOperation: Boolean
     ): Uri {
         return if (isSyncOperation) {
             // If we're in the middle of a real sync-adapter operation, then go ahead
@@ -103,8 +109,8 @@ class ContactOperations(
             // the special permissions, and the system will automagically mark
             // the contact as 'dirty' for us!
             uri.buildUpon()
-                .appendQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, "true")
-                .build()
+                    .appendQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, "true")
+                    .build()
         } else uri
     }
 
@@ -117,29 +123,42 @@ class ContactOperations(
      * Can be null if firstName/lastName are specified.
      */
     private fun addName(
-        fullName: String
+            fullName: String
     ): ContactOperations {
         mValues.apply {
             clear()
             put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, fullName)
             put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, fullName)
             put(
-                ContactsContract.CommonDataKinds.StructuredName.MIMETYPE,
-                ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
+                    ContactsContract.CommonDataKinds.StructuredName.MIMETYPE,
+                    ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
             )
         }
         addInsertOp()
         return this
     }
 
+    private fun addPhone(phone: String): ContactOperations {
+        mValues.apply {
+            clear()
+            put(
+                    ContactsContract.CommonDataKinds.Phone.MIMETYPE,
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+            )
+            put(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+            put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+        }
+        addInsertOp()
+        return this
+    }
 
     private fun addGroupMembership(groupId: Long): ContactOperations {
         mValues.apply {
             clear()
             put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, groupId)
             put(
-                ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,
-                ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE
+                    ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,
+                    ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE
             )
         }
         addInsertOp()
@@ -167,9 +186,9 @@ class ContactOperations(
      */
     private fun addInsertOp() {
         val builder: ContentProviderOperation.Builder = newInsertCpo(
-            ContactsContract.Data.CONTENT_URI,
-            isSyncOperation,
-            mIsYieldAllowed
+                ContactsContract.Data.CONTENT_URI,
+                isSyncOperation,
+                mIsYieldAllowed
         )
         builder.withValues(mValues)
         if (mIsNewContact) {

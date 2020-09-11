@@ -44,7 +44,7 @@ class Authenticator(context: Context) : AbstractAccountAuthenticator(context) {
             p0: AccountAuthenticatorResponse?,
             p1: Account?,
             p2: Array<out String>?
-    ): Bundle {
+        ): Bundle {
         return Bundle.EMPTY
     }
 

@@ -18,7 +18,10 @@
 -->
 
 <ContactsSource
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    inviteContactActivity="cn.jestar.syncdemo.LinkActivity"
+    inviteContactActionLabel="@string/account_label"
+    >
 
     <ContactsDataKind
         android:mimeType="vnd.android.cursor.item/vnd.cn.jestar.syncdemo.link"

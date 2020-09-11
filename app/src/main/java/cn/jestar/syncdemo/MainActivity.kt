@@ -29,9 +29,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_sync).setOnClickListener { onSync() }
         findViewById<Button>(R.id.btn_manual_write_data).setOnClickListener { onManual() }
         findViewById<Button>(R.id.btn_delete_contact_data).setOnClickListener { onDeleteData() }
+        findViewById<Button>(R.id.btn_delete_contact_data).setOnClickListener { onShowData() }
         adapter =
             ArrayAdapter<ContactBean>(this, android.R.layout.simple_list_item_1)
         findViewById<ListView>(R.id.lv_data).adapter = adapter
+    }
+
+    private fun onShowData() {
+        if (account != null) {
+            val data = SyncManager.getAccountData(account!!.name)
+            setAdapter(data)
+        }
     }
 
     private fun onDeleteData() {
@@ -72,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun manualWriteContact() {
         if (account != null) {
-            val sync = SyncManager.sync(account!!)
+            val sync = SyncManager.sync(account!!,false)
             setAdapter(sync)
         }
     }
