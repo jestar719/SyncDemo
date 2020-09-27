@@ -11,7 +11,7 @@ class AccountUtils(private val context: Context) {
     companion object {
         const val ACCOUNT_TYPE = "cn.jestar.syncdemo"
         const val ACCOUNT_LABEL = "Sync Demo"
-        const val ACCOUNT_MIME_TYPE = "vnd.android.cursor.item/cn.jestar.syncdemo"
+        const val ACCOUNT_MIME_TYPE = "vnd.android.cursor.item/cn.jestar.syncdemo.talk"
         const val PROFILE_MSG_SUFFIX="Talk to "
     }
         /**

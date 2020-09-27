@@ -25,17 +25,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAccount() {
         account = ContactSyncManager.getAccount()
-        val hasAccount = account == null
+        val hasAccount = account != null
         if (hasAccount) {
-            et_input_name.setHint(R.string.please_sign_in)
-            et_input_phone.visibility = View.GONE
-            tv_title.setText(R.string.please_input_contact_name)
-            btn_add_account.visibility = View.VISIBLE
-        } else {
-            tv_title.text = account!!.name
-            btn_add_account.visibility = View.VISIBLE
+            tv_title.text=account!!.name
+            et_input_name.setHint(R.string.please_input_contact_name)
+            et_input_phone.visibility = View.VISIBLE
             btn_add_account.visibility = View.GONE
-            tv_title.setText(R.string.please_input_account_name)
+            btn_delete_account.visibility = View.VISIBLE
+        } else {
+            tv_title.text=""
+            et_input_name.setHint(R.string.please_input_account_name)
+            et_input_phone.visibility = View.GONE
+            btn_add_account.visibility = View.VISIBLE
+            btn_delete_account.visibility = View.GONE
         }
         val size = buttons.size
         val visible = if (hasAccount) View.VISIBLE else View.GONE
@@ -45,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        buttons.add(btn_add_account)
         buttons.add(btn_sync)
         buttons.add(btn_manual_sync)
         buttons.add(btn_delete_contact_data)
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         val name = et_input_name.editableText.toString()
         if (name.isNotEmpty()) {
             ContactSyncManager.addAccount(name)
+            et_input_name.setText("")
             checkAccount()
         } else {
             showMsg(R.string.account_name_not_be_null)
@@ -104,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkMyPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkSelfPermission(this, Manifest.permission_group.CONTACTS) != PermissionChecker.PERMISSION_DENIED) {
+            if (PermissionChecker.checkSelfPermission(this, Manifest.permission_group.CONTACTS) != PermissionChecker.PERMISSION_GRANTED) {
                 enableButtons(false)
                 requestPermissions(arrayOf(Manifest.permission_group.CONTACTS), PERMISSION_REQUEST)
             }

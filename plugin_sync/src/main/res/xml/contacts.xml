@@ -23,7 +23,7 @@
     <ContactsDataKind
         android:icon="@drawable/ic_contact_profile"
         android:smallIcon="@drawable/ic_contact_profile"
-        android:mimeType="vnd.android.cursor.item/cn.jestar.syncdemo"
+        android:mimeType="vnd.android.cursor.item/cn.jestar.syncdemo.talk"
         android:summaryColumn="data2"
         android:detailColumn="data3"
         android:detailSocialSummary="true"
