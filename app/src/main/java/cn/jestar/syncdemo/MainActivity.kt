@@ -2,123 +2,129 @@ package cn.jestar.syncdemo;
 
 import android.Manifest
 import android.accounts.Account
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import cn.jestar.syncdemo.contact.ContactBean
-import cn.jestar.syncdemo.contact.SyncManager
+import androidx.core.content.PermissionChecker
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var adapter: ArrayAdapter<ContactBean>
     private val PERMISSION_REQUEST: Int = 0x19
     private var account: Account? = null
-    private lateinit var etInput: EditText
-    private lateinit var tvTitle: TextView
-    private lateinit var btnAddAccount: Button
-
+    private val buttons: MutableList<View> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvTitle = findViewById<TextView>(R.id.tv_title)
-        etInput = findViewById<EditText>(R.id.et_input)
-        btnAddAccount = findViewById<Button>(R.id.btn_add_account)
-        btnAddAccount.setOnClickListener { onAddAccount() }
-        findViewById<Button>(R.id.btn_sync).setOnClickListener { onSync() }
-        findViewById<Button>(R.id.btn_manual_write_data).setOnClickListener { onManual() }
-        findViewById<Button>(R.id.btn_delete_contact_data).setOnClickListener { onDeleteData() }
-        findViewById<Button>(R.id.btn_delete_contact_data).setOnClickListener { onShowData() }
-        adapter =
-            ArrayAdapter<ContactBean>(this, android.R.layout.simple_list_item_1)
-        findViewById<ListView>(R.id.lv_data).adapter = adapter
+        initViews()
+        checkAccount()
+        checkMyPermission()
     }
 
-    private fun onShowData() {
-        if (account != null) {
-            val data = SyncManager.getAccountData(account!!.name)
-            setAdapter(data)
-        }
-    }
-
-    private fun onDeleteData() {
-        if (account != null) {
-            val deleteData = SyncManager.deleteData(account!!.name)
-            setAdapter(deleteData)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        account = SyncManager.getAccount()
-        showInput(account)
-    }
-
-    private fun setAdapter(list: ArrayList<ContactBean>) {
-        adapter.clear()
-        adapter.addAll(list)
-    }
-
-    private fun onAddAccount() {
-        account = SyncManager.addAccount(etInput.editableText.toString())
-        showInput(account)
-    }
-
-    private fun onManual() {
-        if (checkPermission()) {
-            manualWriteContact()
+    private fun checkAccount() {
+        account = ContactSyncManager.getAccount()
+        val hasAccount = account == null
+        if (hasAccount) {
+            et_input_name.setHint(R.string.please_sign_in)
+            et_input_phone.visibility = View.GONE
+            tv_title.setText(R.string.please_input_contact_name)
+            btn_add_account.visibility = View.VISIBLE
         } else {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.WRITE_CONTACTS
-                ), PERMISSION_REQUEST
-            )
+            tv_title.text = account!!.name
+            btn_add_account.visibility = View.VISIBLE
+            btn_add_account.visibility = View.GONE
+            tv_title.setText(R.string.please_input_account_name)
+        }
+        val size = buttons.size
+        val visible = if (hasAccount) View.VISIBLE else View.GONE
+        for (i in 0 until size) {
+            buttons[i].visibility = visible
         }
     }
 
-    private fun manualWriteContact() {
-        if (account != null) {
-            val sync = SyncManager.sync(account!!,false)
-            setAdapter(sync)
+    private fun initViews() {
+        buttons.add(btn_add_account)
+        buttons.add(btn_sync)
+        buttons.add(btn_manual_sync)
+        buttons.add(btn_delete_contact_data)
+        btn_add_account.setOnClickListener { addAccount() }
+        btn_sync.setOnClickListener { sync() }
+        btn_manual_sync.setOnClickListener { manualSync() }
+        btn_delete_contact_data.setOnClickListener { deleteContact() }
+        btn_delete_account.setOnClickListener { deleteAccount() }
+    }
+
+
+    private fun addAccount() {
+        val name = et_input_name.editableText.toString()
+        if (name.isNotEmpty()) {
+            ContactSyncManager.addAccount(name)
+            checkAccount()
+        } else {
+            showMsg(R.string.account_name_not_be_null)
         }
     }
 
-    private fun onSync() {
-        if (account != null) {
-            SyncManager.forceSync(account!!)
-        }
+    private fun sync() {
+        ContactSyncManager.sync()
+        showMsg(R.string.start_sync)
     }
 
-    private fun showInput(account: Account?) {
-        val nullAccount = account == null
-        val visible = if (nullAccount) View.VISIBLE else View.GONE
-        if (!nullAccount) {
-            tvTitle.text = account!!.name
-            if (checkPermission()) {
-                val accountData = SyncManager.getAccountData(account.name)
-                setAdapter(accountData)
+    private fun manualSync() {
+        val name = et_input_name.editableText.toString()
+        if (name.isEmpty()) {
+            showMsg(R.string.contact_name_not_be_null)
+            return
+        }
+        val phone = et_input_phone.editableText.toString()
+        if (name.isEmpty()) {
+            showMsg(R.string.contact_name_not_be_null)
+            return
+        }
+        ContactSyncManager.addContact(name, phone)
+        showMsg(R.string.add_contact_success)
+    }
+
+    private fun deleteContact() {
+        ContactSyncManager.deleteContacts()
+        showMsg(R.string.delete_contact_success)
+    }
+
+    private fun deleteAccount() {
+        ContactSyncManager.deleteAccount()
+        showMsg(R.string.delete_account_success)
+        checkAccount()
+    }
+
+    private fun showMsg(@StringRes msgId: Int) {
+        Toast.makeText(this, msgId, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun checkMyPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (PermissionChecker.checkSelfPermission(this, Manifest.permission_group.CONTACTS) != PermissionChecker.PERMISSION_DENIED) {
+                enableButtons(false)
+                requestPermissions(arrayOf(Manifest.permission_group.CONTACTS), PERMISSION_REQUEST)
             }
         }
-        etInput.visibility = visible
-        btnAddAccount.visibility = visible
-
-    }
-
-    private fun checkPermission(): Boolean {
-        val checkSelfPermission = checkSelfPermission(Manifest.permission.READ_CONTACTS)
-        return checkSelfPermission == PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST && grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED) {
-            manualWriteContact()
+        val hasPermission = requestCode == PERMISSION_REQUEST && grantResults.isNotEmpty() && grantResults[0] == PermissionChecker.PERMISSION_DENIED
+        enableButtons(hasPermission)
+    }
+
+    private fun enableButtons(enable: Boolean) {
+        for (button in buttons) {
+            button.isEnabled = enable
+            button.isClickable = enable
         }
     }
 }

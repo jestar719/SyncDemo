@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accountType="cn.jestar.syncdemo"
+    android:icon="@drawable/ic_contact_profile"
+    android:smallIcon="@drawable/ic_contact_profile"
+    android:label="@string/account_label"
+/>

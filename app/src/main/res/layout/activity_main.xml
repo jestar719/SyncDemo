@@ -20,7 +20,7 @@
         style="@style/base_text" />
 
     <EditText
-        android:id="@+id/et_input"
+        android:id="@+id/et_input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,6 +30,19 @@
         android:hint="@string/please_input_account_name"
         style="@style/base_text"
         />
+
+    <EditText
+        android:id="@+id/et_input_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_input_name"
+        android:layout_margin="16dp"
+        android:hint="@string/please_input_contact_phone"
+        style="@style/base_text"
+        android:visibility="gone"
+        />
     <Button
         android:id="@+id/btn_add_account"
         android:layout_width="match_parent"
@@ -38,7 +51,7 @@
         android:text="@string/add_account"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_input"
+        app:layout_constraintTop_toBottomOf="@id/et_input_phone"
         style="@style/base_text"
         />
 
@@ -52,18 +65,20 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_add_account"
         style="@style/base_text"
+        android:visibility="gone"
         />
 
     <Button
-        android:id="@+id/btn_manual_write_data"
+        android:id="@+id/btn_manual_sync"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/manual_write_data"
+        android:text="@string/manual_sync"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_sync"
         style="@style/base_text"
+        android:visibility="gone"
         />
 
     <Button
@@ -74,31 +89,22 @@
         android:text="@string/delete_contact_data"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_manual_write_data"
+        app:layout_constraintTop_toBottomOf="@id/btn_manual_sync"
         style="@style/base_text"
+        android:visibility="gone"
         />
 
     <Button
-        android:id="@+id/btn_show_account_data"
+        android:id="@+id/btn_delete_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/show_contact_data"
+        android:text="@string/delete_account"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_delete_contact_data"
         style="@style/base_text"
+        android:visibility="gone"
         />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/lv_data"
-        android:layout_margin="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_show_account_data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Sync Demo</string>
-    <string name="label">TNGD</string>
+    <string name="account_label">Sync Demo</string>
     <string name="please_sign_in">Please Add Account</string>
-    <string name="please_input_account_name">Please Input Account Name</string>
     <string name="add_account">Add Account</string>
-    <string name="sync">SYNC</string>
-    <string name="manual_write_data">Manual Write Data</string>
-    <string name="account_type">cn.jestar.syncdemo</string>
-    <string name="account_link">vnd.android.cursor.item/vnd.cn.jestar.syncdemo.link</string>
-    <string name="account_label">TNGD</string>
+    <string name="sync">Sync</string>
+    <string name="manual_sync">Manual Sync</string>
     <string name="delete_contact_data">Delete Contact Data</string>
-    <string name="show_contact_data">Show Account Data</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="please_input_account_name">Please input account name</string>
+    <string name="please_input_contact_name">Please input contact name</string>
+    <string name="please_input_contact_phone">Please input contact phone</string>
+    <string name="account_name_not_be_null">Account name not be null</string>
+    <string name="start_sync">Contact was sync,Please check your contacts</string>
+    <string name="contact_name_not_be_null">contact_name_not_be_empty</string>
+    <string name="add_contact_success">Add contact success,Please check your contacts</string>
+    <string name="delete_contact_success" />
+    <string name="delete_account_success" />
 </resources>
